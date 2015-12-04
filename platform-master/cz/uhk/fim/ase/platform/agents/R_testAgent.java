@@ -22,7 +22,7 @@ public class R_testAgent extends GenericAgent {
     public R_testAgent(Platform platform, Agent identity) {
         super(platform, identity);
         identity.getAttributes().put("seller", "true");
-        
+        identity.getAttributes().put("Finance", "50000");
         //TODO
         ArrayList<Agent> partners = null;
         List<Agent> agents = getRegistry().getAgents();
