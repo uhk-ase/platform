@@ -192,6 +192,9 @@ public abstract class GenericAgent implements Runnable {
 			}
 			identity.getDealings().remove(messege.getMessageID());
 		}
+    	if (messege.getFipa_type() == "Refuse") {
+			identity.getDealings().remove(messege.getMessageID());
+		}
 		return messege;
 	}
 }
