@@ -21,8 +21,18 @@ public class Agent implements Serializable {
     private ArrayList<Agent> partners;//
     private Float finenc;
     private String produkt;
+    private ArrayList<Integer> dealings;
 
-    public Inventory getInventory() {
+    
+    public ArrayList<Integer> getDealings() {
+		return dealings;
+	}
+
+	public void setDealings(ArrayList<Integer> dealings) {
+		this.dealings = dealings;
+	}
+
+	public Inventory getInventory() {
 		return inventory;
 	}
 
