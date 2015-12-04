@@ -54,6 +54,7 @@ public abstract class GenericAgent implements Runnable {
 			request.setQuantity(10);
 			request.setPrice(1000);
 			request.setMessageID((int)Math.random());
+			identity.getDealings().add(request.getMessageID());
 			
 			return request;
 		}
@@ -67,6 +68,7 @@ public abstract class GenericAgent implements Runnable {
 			request.setQuantity(10);
 			request.setPrice(1000);
 			request.setMessageID((int)Math.random());
+			identity.getDealings().add(request.getMessageID());
 			
 			return request;
 		}
@@ -80,6 +82,7 @@ public abstract class GenericAgent implements Runnable {
 			request.setQuantity(10);
 			request.setPrice(1000);
 			request.setMessageID((int)Math.random());
+			identity.getDealings().add(request.getMessageID());
 			
 			return request;
 		}
@@ -169,7 +172,26 @@ public abstract class GenericAgent implements Runnable {
 				}
 			}
 		}
-    	
+    	if (messege.getFipa_type() == "Accept") {
+			switch (messege.getProdukt()) {
+			case "food":
+				identity.getInventory().sellFood(messege.getQuantity(), messege.getPrice());
+				messege = null;
+				break;
+			case "tool":
+				identity.getInventory().sellTool(messege.getQuantity(), messege.getPrice());
+				messege = null;
+				break;
+			case "painkiler":
+				identity.getInventory().sellPainkiller(messege.getQuantity(), messege.getPrice());
+				messege = null;
+				break;
+
+			default:
+				break;
+			}
+			identity.getDealings().remove(messege.getMessageID());
+		}
 		return messege;
 	}
 }
