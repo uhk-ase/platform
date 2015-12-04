@@ -18,6 +18,7 @@ public class BuyerAgent extends GenericAgent {
         super(platform, identity);
         identity.getAttributes().put("buyer", "true");
     }
+    //pokus 3
 
     @Override
     public void run() {
@@ -28,6 +29,9 @@ public class BuyerAgent extends GenericAgent {
         request.setRecipient(seller);
         send(request);
 
+        if (true) {
+			
+		}
         // process response
         Message response = receive();
         if (response != null) {
