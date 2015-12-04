@@ -18,7 +18,8 @@ public class BuyerAgent extends GenericAgent {
         super(platform, identity);
         identity.getAttributes().put("buyer", "true");
     }
-    //pokus 3
+    //pokus 3adfs
+    //asfd
 
     @Override
     public void run() {
@@ -42,5 +43,8 @@ public class BuyerAgent extends GenericAgent {
 
         // print stuff
         System.out.println("Agent " + getIdentity().getId() + " = " + stuff);
+        if (true) {
+			System.err.println("dsaf");
+		}
     }
 }
