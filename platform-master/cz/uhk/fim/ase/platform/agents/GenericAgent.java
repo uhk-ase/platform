@@ -53,6 +53,7 @@ public abstract class GenericAgent implements Runnable {
 			request.setProdukt("food");
 			request.setQuantity(10);
 			request.setPrice(1000);
+			request.setMessageID((int)Math.random());
 			
 			return request;
 		}
@@ -65,6 +66,7 @@ public abstract class GenericAgent implements Runnable {
 			request.setProdukt("painkiller");
 			request.setQuantity(10);
 			request.setPrice(1000);
+			request.setMessageID((int)Math.random());
 			
 			return request;
 		}
@@ -77,6 +79,7 @@ public abstract class GenericAgent implements Runnable {
 			request.setProdukt("tool");
 			request.setQuantity(10);
 			request.setPrice(1000);
+			request.setMessageID((int)Math.random());
 			
 			return request;
 		}
@@ -166,6 +169,7 @@ public abstract class GenericAgent implements Runnable {
 				}
 			}
 		}
+    	
 		return messege;
 	}
 }
