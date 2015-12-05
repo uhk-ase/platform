@@ -41,6 +41,7 @@ public class R_testAgent extends GenericAgent {
 		for (int i = 0; i < 5; i++) {
 			Message offer_for_someone = Shop();
 			offer_for_someone.setSender(getIdentity());
+			getIdentity().getDealings().add(offer_for_someone.getMessageID());
 			send(offer_for_someone);	
 		}
 		
