@@ -1,5 +1,7 @@
 package cz.uhk.fim.ase.platform.agents;
 
+import java.util.Random;
+
 import cz.uhk.fim.ase.platform.core.Platform;
 import cz.uhk.fim.ase.platform.core.Registry;
 import cz.uhk.fim.ase.platform.model.Agent;
@@ -153,8 +155,9 @@ public abstract class GenericAgent implements Runnable {
     	if (messege.getFipa_type() == "offer") {
     		if (messege.getBuy_sell() == "sell") {
     			//decisio if offer accept or not
-    			int decision = (int) Math.random();
-				if (decision > 50) {
+    			Random r = new Random();
+    			int randomInt = r.nextInt(100) + 1;
+				if (randomInt > 50) {
 					switch (messege.getProdukt()) {
 					case "food":
 						identity.getInventory().buyFood(messege.getQuantity(),
