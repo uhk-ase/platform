@@ -152,24 +152,33 @@ public abstract class GenericAgent implements Runnable {
     	// rozhodování se èasem rozroste a dáme ho do samostatný tøídy
     	if (messege.getFipa_type() == "offer") {
     		if (messege.getBuy_sell() == "sell") {
-				switch (messege.getProdukt()) {
-				case "food":
-					identity.getInventory().buyFood(messege.getQuantity(), messege.getPrice());
-					messege.setFipa_type("Accept");
-					break;
-				case "tool":
-					identity.getInventory().buyTool(messege.getQuantity(), messege.getPrice());
-					messege.setFipa_type("Accept");
-					break;
-				case "painkiler":
-					identity.getInventory().buyPainkiller(messege.getQuantity(), messege.getPrice());
-					messege.setFipa_type("Accept");
-					break;
+    			//decisio if offer accept or not
+    			int decision = (int) Math.random();
+				if (decision > 50) {
+					switch (messege.getProdukt()) {
+					case "food":
+						identity.getInventory().buyFood(messege.getQuantity(),
+								messege.getPrice());
+						messege.setFipa_type("Accept");
+						break;
+					case "tool":
+						identity.getInventory().buyTool(messege.getQuantity(),
+								messege.getPrice());
+						messege.setFipa_type("Accept");
+						break;
+					case "painkiler":
+						identity.getInventory().buyPainkiller(
+								messege.getQuantity(), messege.getPrice());
+						messege.setFipa_type("Accept");
+						break;
 
-				default:
-					messege.setFipa_type("Fail");
-					break;
+					default:
+						messege.setFipa_type("Fail");
+						break;
+					}
 				}
+			}else {
+				messege.setFipa_type("Refuse");
 			}
 		}
     	if (messege.getFipa_type() == "Accept") {
