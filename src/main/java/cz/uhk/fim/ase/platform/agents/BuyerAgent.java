@@ -37,6 +37,6 @@ public class BuyerAgent extends GenericAgent {
         }
 
         // print stuff
-        System.out.println("Agent " + getIdentity().getId() + " = " + stuff);
+        //System.out.println("Agent " + getIdentity().getId() + " = " + stuff);
     }
 }

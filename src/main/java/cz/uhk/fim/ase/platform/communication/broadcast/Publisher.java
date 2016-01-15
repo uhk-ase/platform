@@ -23,15 +23,16 @@ public class Publisher {
         this.port = port;
     }
 
-    public void publish(Object message) {
+    public synchronized void publish(Object message) {
+        logger.debug("Publishing broadcast message");
         byte[] bytes = fst.asByteArray(message);
         getSocket().send(bytes, 0);
     }
 
-    private ZMQ.Socket getSocket() {
+    private synchronized ZMQ.Socket getSocket() {
         if (socket == null) {
             ZMQ.Context context = ZeromqContext.getContext();
-            socket = context.socket(ZMQ.PUB);
+            socket = context.socket(ZMQ.DEALER);
             socket.connect("tcp://" + address + ":" + port);
         }
         return socket;
