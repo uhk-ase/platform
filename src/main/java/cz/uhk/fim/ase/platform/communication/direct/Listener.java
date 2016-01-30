@@ -1,4 +1,4 @@
-package cz.uhk.fim.ase.platform.communication.direct;
+package main.java.cz.uhk.fim.ase.platform.communication.direct;
 
 /**
  * @author Tomáš Kolinger <tomas@kolinger.name>

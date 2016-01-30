@@ -1,4 +1,4 @@
-package cz.uhk.fim.ase.platform.communication.internal;
+package main.java.cz.uhk.fim.ase.platform.communication.internal;
 
 import org.zeromq.ZMQ;
 

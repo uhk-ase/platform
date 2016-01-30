@@ -1,4 +1,4 @@
-package cz.uhk.fim.ase.platform;
+package main.java.cz.uhk.fim.ase.platform;
 
 import cz.uhk.fim.ase.platform.core.Config;
 import cz.uhk.fim.ase.platform.core.Platform;
