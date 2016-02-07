@@ -18,6 +18,9 @@ public class R_testAgent extends GenericAgent {
 	private int stuff = 0;
     private Random random = new Random();
     private ArrayList<Message> offerList;
+
+	Message offer_for_me = null;
+	Message offer_respond = null;
     
     public R_testAgent(Platform platform, Agent identity) {
         super(platform, identity);
@@ -46,12 +49,23 @@ public class R_testAgent extends GenericAgent {
 		}
 		
 		
-        //Agent respond on offer from other agent.
-		while (receive() != null) {
-			Message offer_for_me = receive();
-			Message offer_respond = decision(offer_for_me);
+//        //Agent respond on offer from other agent.
+//		while (receive() != null) {
+//			Message offer_for_me = receive();
+//			Message offer_respond = decision(offer_for_me);
+//			offer_respond.setSender(getIdentity());
+//			send(offer_respond);			
+//		}
+		//Agent respond on offer from other agent.
+		for (int i = 0; i < 5; i++) {
+			
+			offer_for_me = null;//cleer
+			offer_respond = null;//cleer
+			
+			offer_for_me = receive();
+			offer_respond = decision(offer_for_me);
 			offer_respond.setSender(getIdentity());
-			send(offer_respond);			
+			send(offer_respond);
 		}
     }
 }
