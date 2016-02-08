@@ -156,7 +156,7 @@ public abstract class GenericAgent implements Runnable {
     		if (messege.getBuy_sell() == "sell") {
     			//decisio if offer accept or not
     			Random r = new Random();
-    			int randomInt = r.nextInt(100) + 1;
+    			//int randomInt = r.nextInt(100) + 1;
 				if (itsGoodOffer(messege) == true) {
 					switch (messege.getProdukt()) {
 					case "food":
@@ -233,13 +233,35 @@ public abstract class GenericAgent implements Runnable {
 	}
 
 	private boolean itsGoodOffer(Message messageToCompare) {
-		Float compare = null; //identity./*some DesicionAttribute*/; each agent has own number, based on previous experience
 		
-		if (messageToCompare.getPrice() < compare) {
-			return true;
-		}else {
+		switch (messageToCompare.getProdukt()) {
+		case "food":
+			if ((messageToCompare.getPrice()/messageToCompare.getQuantity()) < identity.getDecisionParameter().get("buyParamaterFood"))// full price is divided quantity, from thet we get price from 1 unit 
+			{
+				return true;
+			}else {
+				return false;
+			}
+		case "tool":
+			if ((messageToCompare.getPrice()/messageToCompare.getQuantity()) < identity.getDecisionParameter().get("buyParamaterTool")) 
+			{
+				return true;
+			}else {
+				return false;
+			}
+		case "painkiler":
+			if ((messageToCompare.getPrice()/messageToCompare.getQuantity()) < identity.getDecisionParameter().get("buyParamaterPainkiler")) 
+			{
+				return true;
+			}else {
+				return false;
+			}
+		default:
 			return false;
+			
 		}
-		
+		}
 	}
-}
+		
+	
+

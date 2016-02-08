@@ -88,6 +88,14 @@ public class Agent implements Serializable {
     public void setAttributes(Map<String, String> attributes) {
         this.attributes = attributes;
     }
+    
+    public Map<String, Integer> getDecisionParameter() {
+        return decisionParameter;
+    }
+
+    public void setDecisionParameter(Map<String, Integer> decisionParameter) {
+        this.decisionParameter = decisionParameter;
+    }
 
     @Override
     public boolean equals(Object o) {
