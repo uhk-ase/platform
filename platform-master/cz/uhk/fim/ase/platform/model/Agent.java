@@ -22,6 +22,7 @@ public class Agent implements Serializable {
     private Float finenc;
     private String produkt;
     private ArrayList<Integer> dealings;
+    private Map<String,Integer> decisionParameter = new HashMap<>();
 
     
     public ArrayList<Integer> getDealings() {

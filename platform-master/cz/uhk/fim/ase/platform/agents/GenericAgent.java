@@ -157,7 +157,7 @@ public abstract class GenericAgent implements Runnable {
     			//decisio if offer accept or not
     			Random r = new Random();
     			int randomInt = r.nextInt(100) + 1;
-				if (randomInt > 50) {
+				if (itsGoodOffer(messege) == true) {
 					switch (messege.getProdukt()) {
 					case "food":
 						identity.getInventory().buyFood(messege.getQuantity(),
@@ -206,7 +206,40 @@ public abstract class GenericAgent implements Runnable {
 		}
     	if (messege.getFipa_type() == "Refuse") {
 			identity.getDealings().remove(messege.getMessageID());
+			lern(false,"sell");
 		}
 		return messege;
+	}
+
+	private void lern(boolean b, String type) {
+		if (type == "sell") { //agent sell some thing
+			if (b==true) {
+				//trade was successful. Agent can rise his price or keep it same. 
+				//TODO identity.setAttribute()++
+			}
+			if (b==false) {
+				//TODO identity.setAttribute()--
+			}
+		}if (type == "buy") {// agent buy some thing
+			if (b==true) {
+				//trade was successful. Agent can reduce his price or keep it same
+				//TODO identity.setAttribute()--
+			}
+			if (b==false) {
+				//TODO identity.setAttribute()++
+			}
+		}
+		
+	}
+
+	private boolean itsGoodOffer(Message messageToCompare) {
+		Float compare = null; //identity./*some DesicionAttribute*/; each agent has own number, based on previous experience
+		
+		if (messageToCompare.getPrice() < compare) {
+			return true;
+		}else {
+			return false;
+		}
+		
 	}
 }
