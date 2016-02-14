@@ -35,10 +35,18 @@ public class DatabaseSQL {
             System.out.println("Creating statement...");
             st = conn.createStatement();
             String sql;
-            st.addBatch("DROP TABLE agenti");
-            st.addBatch("CREATE TABLE agents(id INT NOT NULL GENERATED ALWAYS AS IDENTITY " + "CONSTRAINT AGENTI_PK PRIMARY KEY, name VARCHAR(26), valut INTEGER()");
+            st.addBatch("DROP TABLE agents");
 
-            st.addBatch("INSERT INTO agents (id, name, valut) VALUES ('1','ÈEZ','15000000')");
+            st.addBatch("CREATE TABLE agents (id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(26), valut INTEGER(6))");
+            st.executeBatch();
+            //st.addBatch("ALTER TABLE agents AUTO_INCREMENT=1");
+
+            // !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !!
+            st.addBatch("INSERT INTO agents (name, valut) VALUES ('ÈEZ','15000000')");
+            st.addBatch("INSERT INTO agents (name, valut) VALUES ('agent82','30000')");
+            st.addBatch("INSERT INTO agents (name, valut) VALUES ('agent54','100000')");
+            st.executeBatch();
+
             ResultSet rs = st.executeQuery("SELECT * FROM agents ORDER BY id, valut");
             while (rs.next()) {
                 String id = rs.getString("id");
