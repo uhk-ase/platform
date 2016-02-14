@@ -12,7 +12,7 @@ public class DatabaseSQL {
 
     //JDBC driver and database url (hosting on wedos)
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://wm80.wedos.net/";
+    static final String DB_URL = "jdbc:mysql://wm80.wedos.net/d94420_db/";
 
     //database login
     //TODO: Nebezpecne!! Nejlepe zahashovat..
@@ -75,6 +75,8 @@ public class DatabaseSQL {
                     Statement st = con.createStatement()) {
                 st.addBatch("INSERT INTO agents (id, name, valut) VALUES ('" + id + "','" + name + "','" + valut + "')");
                 st.executeBatch();
+                st.close();
+                con.close();
             }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DatabaseSQL.class.getName()).log(Level.SEVERE, null, ex);
