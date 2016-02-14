@@ -1,30 +1,41 @@
 package cz.uhk.fim.ase.platform.database;
 
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author AnDylek
+ * @author Jakub "AnDylek" Pluhar
  */
 public class DatabaseSQL {
 
-    //JDBC driver and database url (hosting on wedos)
+    //JDBC driver and database url (free hosting)
+    //TODO: Add school DB creditals!!
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://wm80.wedos.net/d94420_db/";
+    static final String DB_URL = "db4free.net";
+    static final String DB_NAME = "vp_agents";
 
-    //database login
+    //Database login
     //TODO: Nebezpecne!! Nejlepe zahashovat..
-    static final String USER = "a94420_db";
-    static final String PASS = "deRuNsfq";
+    static final String USER = "andylek";
+    static final String PASS = "toor123";
 
-    public void createDB() {
-        Connection conn = null;
-        Statement st = null;
+    public void CreateDB() {
+
         try {
 
-            //register JDBC driver
+            MysqlDataSource dataSource = new MysqlDataSource();
+            dataSource.setUser(USER);
+            dataSource.setPassword(PASS);
+            dataSource.setServerName(DB_URL);
+            dataSource.setDatabaseName(DB_NAME);
+
+            Connection conn;
+            Statement st;
+
+            //Register JDBC driver
             Class.forName(JDBC_DRIVER);
 
             //Open a connection
@@ -32,16 +43,17 @@ public class DatabaseSQL {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             //Execute a query
-            System.out.println("Creating statement...");
+            System.out.println("Creating database...");
             st = conn.createStatement();
-            String sql;
-            st.addBatch("DROP TABLE agents");
 
+            st.addBatch("DROP TABLE agents");
+            //TODO: Update database tables to real model.
             st.addBatch("CREATE TABLE agents (id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(26), valut INTEGER(6))");
             st.executeBatch();
-            //st.addBatch("ALTER TABLE agents AUTO_INCREMENT=1");
+            System.out.println("Database sucessfully created.");
 
             // !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !!
+            System.out.println("Executing database statements...");
             st.addBatch("INSERT INTO agents (name, valut) VALUES ('ÈEZ','15000000')");
             st.addBatch("INSERT INTO agents (name, valut) VALUES ('agent82','30000')");
             st.addBatch("INSERT INTO agents (name, valut) VALUES ('agent54','100000')");
@@ -54,8 +66,11 @@ public class DatabaseSQL {
                 Integer valut = rs.getInt("valut");
                 System.out.println(id + " | " + name + " | " + valut + "\n");
             }
-            st.executeBatch();
 
+            System.out.println("Test of database ended succesfully! Hurray!");
+
+            //Ending commands
+            st.executeBatch();
             rs.close();
             st.close();
             conn.close();
@@ -65,22 +80,7 @@ public class DatabaseSQL {
         }
     }
 
-    public void WriteIntoDB(String id, String name, Integer valut) {
-        try {
-            // load JDBC driver into memory
-            Class.forName(JDBC_DRIVER);
-            // create instance of statement
-            try ( // create conenction to database
-                    Connection con = DriverManager.getConnection(DB_URL, USER, PASS); // create instance of statement
-                    Statement st = con.createStatement()) {
-                st.addBatch("INSERT INTO agents (id, name, valut) VALUES ('" + id + "','" + name + "','" + valut + "')");
-                st.executeBatch();
-                st.close();
-                con.close();
-            }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(DatabaseSQL.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+    public static void AddRow(int customID, String production, String strategy, int sellPrice, int money) {
+        //TODO: Update this method.
     }
 }
