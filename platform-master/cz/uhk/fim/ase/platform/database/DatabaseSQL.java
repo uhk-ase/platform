@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Jakub "AnDylek" Pluhar
+ * @author Jakub "AnDylek" Pluhar <jakub.pluhar@gmail.com at andylek.eu>
  */
 public class DatabaseSQL {
 
@@ -18,7 +18,7 @@ public class DatabaseSQL {
     static final String DB_NAME = "vp_agents";
 
     //Database login
-    //TODO: Nebezpecne!! Nejlepe zahashovat..
+    //TODO: UNSAFE!!
     static final String USER = "andylek";
     static final String PASS = "toor123";
 
@@ -41,6 +41,7 @@ public class DatabaseSQL {
             //Open a connection
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            System.out.println("Succesfully connected.");
 
             //Execute a query
             System.out.println("Creating database...");
@@ -50,7 +51,7 @@ public class DatabaseSQL {
             //TODO: Update database tables to real model.
             st.addBatch("CREATE TABLE agents (id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(26), valut INTEGER(6))");
             st.executeBatch();
-            System.out.println("Database sucessfully created.");
+            System.out.println("Database successfully created.");
 
             // !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !!
             System.out.println("Executing database statements...");
@@ -74,13 +75,88 @@ public class DatabaseSQL {
             rs.close();
             st.close();
             conn.close();
-
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DatabaseSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * This method adds new row into database
+     *
+     * @param customID is ID of agent
+     * @param production is type of agent production
+     * @param strategy is type of strategy of agent
+     * @param sellPrice is value, that is agent selling his product
+     * @param money is money, that agent have
+     */
     public static void AddRow(int customID, String production, String strategy, int sellPrice, int money) {
-        //TODO: Update this method.
+
+        try {
+            MysqlDataSource dataSource = new MysqlDataSource();
+            dataSource.setUser(USER);
+            dataSource.setPassword(PASS);
+            dataSource.setServerName(DB_URL);
+            dataSource.setDatabaseName(DB_NAME);
+
+            Connection conn;
+            Statement st;
+
+            Class.forName(JDBC_DRIVER);
+
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            System.out.println("Succesfully connected.");
+
+            System.out.println("Writing into database...");
+            st = conn.createStatement();
+
+            //TODO: Update this method.
+            st.addBatch("");
+
+            st.executeBatch();
+            st.close();
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(DatabaseSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * This method prints the whole database.
+     */
+    public static void GetDatabase() {
+        try {
+            MysqlDataSource dataSource = new MysqlDataSource();
+            dataSource.setUser(USER);
+            dataSource.setPassword(PASS);
+            dataSource.setServerName(DB_URL);
+            dataSource.setDatabaseName(DB_NAME);
+
+            Connection conn;
+            Statement st;
+            Class.forName(JDBC_DRIVER);
+
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            System.out.println("Succesfully connected.");
+
+            System.out.println("Writing into database...");
+            st = conn.createStatement();
+
+            //TODO: edit SQL arguments by values needed
+            ResultSet rs = st.executeQuery("SELECT * FROM agents ORDER BY id, valut");
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String name = rs.getString("name");
+                Integer valut = rs.getInt("valut");
+                System.out.println(id + " | " + name + " | " + valut + "\n");
+            }
+
+            st.executeBatch();
+            st.close();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(DatabaseSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }
