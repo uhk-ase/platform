@@ -49,7 +49,7 @@ public class DatabaseSQL {
 
             st.addBatch("DROP TABLE agents");
             //TODO: Update database tables to real model.
-            st.addBatch("CREATE TABLE agents (id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,money INT(6), product VARCHAR(255), food INT(6), painkillers INT(6), tools INT(6))");
+            st.addBatch("CREATE TABLE agents (id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,money INT(6),agentID VARCHAR(255), product VARCHAR(255), food INT(6), painkillers INT(6), tools INT(6))");
             st.executeBatch();
             System.out.println("Database successfully created.");         
 
@@ -67,13 +67,14 @@ public class DatabaseSQL {
      * This method adds new row into database
      *
      * @param id
+     * @param agentID
      * @param product
      * @param inventory_Food
      * @param inventory_PainKillers
      * @param inventory_Tools
      * @param money is money, that agent have
      */
-    public static void AddRow(int id, Float money, String product, int inventory_Food, int inventory_PainKillers, int inventory_Tools) {
+    public static void AddRow(int id, String agentID, Float money, String product, int inventory_Food, int inventory_PainKillers, int inventory_Tools) {
 
         try {
             MysqlDataSource dataSource = new MysqlDataSource();
@@ -91,7 +92,7 @@ public class DatabaseSQL {
             
             System.out.println("Writing into database...");
             st = conn.createStatement();            
-            st.addBatch("INSERT INTO agents (id, money, product, food, painkillers, tools) VALUES (" + id + "," + money + "," + product + "," + inventory_Food + "," + inventory_PainKillers + "," + inventory_Tools +")");
+            st.addBatch("INSERT INTO agents (id, money, product, food, painkillers, tools) VALUES (" + id + "," + agentID + "," + money + "," + product + "," + inventory_Food + "," + inventory_PainKillers + "," + inventory_Tools +")");
             st.executeBatch();
             st.close();
 
@@ -121,16 +122,17 @@ public class DatabaseSQL {
             System.out.println("Writing into database...");
             st = conn.createStatement();
             
-            ResultSet rs = st.executeQuery("SELECT * FROM agents ORDER BY id, valut");
-            System.out.println("ID | MONEY | PRODUCT | FOOD | PAINKILLERS | TOOLS " + "\n");
+            ResultSet rs = st.executeQuery("SELECT * FROM agents ORDER BY id, agentID");
+            System.out.println("ID | AGENT ID | MONEY | PRODUCT | FOOD | PAINKILLERS | TOOLS " + "\n");
             while (rs.next()) {                
                 Integer id = rs.getInt("id");
+                String agentID = rs.getString("agentID");
                 Integer money = rs.getInt("money");
                 String product = rs.getString("product");
                 Integer food = rs.getInt("food");
                 Integer painkillers = rs.getInt("painkillers");
                 Integer tools = rs.getInt("tools");
-                System.out.println(id + " | " + money + " | " + product + " | " + food + " | " + painkillers + " | " + tools + " | " + "\n");
+                System.out.println(id + " | " + agentID + " | " + money + " | " + product + " | " + food + " | " + painkillers + " | " + tools + " | " + "\n");
             }
             
             st.executeBatch();
