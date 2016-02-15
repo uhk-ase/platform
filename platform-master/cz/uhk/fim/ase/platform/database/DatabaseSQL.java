@@ -49,32 +49,15 @@ public class DatabaseSQL {
 
             st.addBatch("DROP TABLE agents");
             //TODO: Update database tables to real model.
-            st.addBatch("CREATE TABLE agents (id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(26), valut INTEGER(6))");
+            st.addBatch("CREATE TABLE agents (id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,money INT(6), product VARCHAR(255), food INT(6), painkillers INT(6), tools INT(6))");
             st.executeBatch();
-            System.out.println("Database successfully created.");
-
-            // !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !! _ !! TEST !!
-            System.out.println("Executing database statements...");
-            st.addBatch("INSERT INTO agents (name, valut) VALUES ('ÈEZ','15000000')");
-            st.addBatch("INSERT INTO agents (name, valut) VALUES ('agent82','30000')");
-            st.addBatch("INSERT INTO agents (name, valut) VALUES ('agent54','100000')");
-            st.executeBatch();
-
-            ResultSet rs = st.executeQuery("SELECT * FROM agents ORDER BY id, valut");
-            while (rs.next()) {
-                String id = rs.getString("id");
-                String name = rs.getString("name");
-                Integer valut = rs.getInt("valut");
-                System.out.println(id + " | " + name + " | " + valut + "\n");
-            }
-
-            System.out.println("Test of database ended succesfully! Hurray!");
+            System.out.println("Database successfully created.");         
 
             //Ending commands
             st.executeBatch();
-            rs.close();
             st.close();
             conn.close();
+            
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DatabaseSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,13 +66,14 @@ public class DatabaseSQL {
     /**
      * This method adds new row into database
      *
-     * @param customID is ID of agent
-     * @param production is type of agent production
-     * @param strategy is type of strategy of agent
-     * @param sellPrice is value, that is agent selling his product
+     * @param id
+     * @param product
+     * @param inventory_Food
+     * @param inventory_PainKillers
+     * @param inventory_Tools
      * @param money is money, that agent have
      */
-    public static void AddRow(int customID, String production, String strategy, int sellPrice, int money) {
+    public static void AddRow(int id, Float money, String product, int inventory_Food, int inventory_PainKillers, int inventory_Tools) {
 
         try {
             MysqlDataSource dataSource = new MysqlDataSource();
@@ -97,22 +81,17 @@ public class DatabaseSQL {
             dataSource.setPassword(PASS);
             dataSource.setServerName(DB_URL);
             dataSource.setDatabaseName(DB_NAME);
-
             Connection conn;
             Statement st;
-
             Class.forName(JDBC_DRIVER);
-
+            
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             System.out.println("Succesfully connected.");
-
+            
             System.out.println("Writing into database...");
-            st = conn.createStatement();
-
-            //TODO: Update this method.
-            st.addBatch("");
-
+            st = conn.createStatement();            
+            st.addBatch("INSERT INTO agents (id, money, product, food, painkillers, tools) VALUES (" + id + "," + money + "," + product + "," + inventory_Food + "," + inventory_PainKillers + "," + inventory_Tools +")");
             st.executeBatch();
             st.close();
 
@@ -131,7 +110,6 @@ public class DatabaseSQL {
             dataSource.setPassword(PASS);
             dataSource.setServerName(DB_URL);
             dataSource.setDatabaseName(DB_NAME);
-
             Connection conn;
             Statement st;
             Class.forName(JDBC_DRIVER);
@@ -142,18 +120,22 @@ public class DatabaseSQL {
 
             System.out.println("Writing into database...");
             st = conn.createStatement();
-
-            //TODO: edit SQL arguments by values needed
+            
             ResultSet rs = st.executeQuery("SELECT * FROM agents ORDER BY id, valut");
-            while (rs.next()) {
-                String id = rs.getString("id");
-                String name = rs.getString("name");
-                Integer valut = rs.getInt("valut");
-                System.out.println(id + " | " + name + " | " + valut + "\n");
+            System.out.println("ID | MONEY | PRODUCT | FOOD | PAINKILLERS | TOOLS " + "\n");
+            while (rs.next()) {                
+                Integer id = rs.getInt("id");
+                Integer money = rs.getInt("money");
+                String product = rs.getString("product");
+                Integer food = rs.getInt("food");
+                Integer painkillers = rs.getInt("painkillers");
+                Integer tools = rs.getInt("tools");
+                System.out.println(id + " | " + money + " | " + product + " | " + food + " | " + painkillers + " | " + tools + " | " + "\n");
             }
-
+            
             st.executeBatch();
             st.close();
+            
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DatabaseSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
