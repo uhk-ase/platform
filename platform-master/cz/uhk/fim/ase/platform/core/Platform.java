@@ -84,7 +84,7 @@ public class Platform {
 
         // create agents
         List<GenericAgent> agents = new ArrayList<>();
-        for (int count = 1; count <= 500; count++) {
+        for (int count = 1; count <= 1000000; count++) {
             Agent agent = new Agent();
             agent.setId(UUID.randomUUID().toString());
             agent.setPlatform(config.getPlatform());
@@ -97,6 +97,8 @@ public class Platform {
 //            agents.add(new SellerAgent(this, agent));
 //            registry.addAgent(agent);
         }
+        
+        
 
         while (!tickManager.isEnd()) {
             logger.debug("Tick #" + tickManager.getCurrent());
