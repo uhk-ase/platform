@@ -42,9 +42,13 @@ public class BuyerAgent extends GenericAgent {
         }
 
         // print stuff
+<<<<<<< HEAD
         System.out.println("Agent " + getIdentity().getId() + " = " + stuff);
         if (true) {
 			System.err.println("dsaf");
 		}
+=======
+        //System.out.println("Agent " + getIdentity().getId() + " = " + stuff);
+>>>>>>> refs/remotes/origin/master
     }
 }
