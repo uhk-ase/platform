@@ -21,8 +21,19 @@ public class Agent implements Serializable {
     private ArrayList<Agent> partners;//
     private Float finenc;
     private String produkt;
+    private ArrayList<Integer> dealings;
+    private Map<String,Integer> decisionParameter = new HashMap<>();
 
-    public Inventory getInventory() {
+    
+    public ArrayList<Integer> getDealings() {
+		return dealings;
+	}
+
+	public void setDealings(ArrayList<Integer> dealings) {
+		this.dealings = dealings;
+	}
+
+	public Inventory getInventory() {
 		return inventory;
 	}
 
@@ -76,6 +87,14 @@ public class Agent implements Serializable {
 
     public void setAttributes(Map<String, String> attributes) {
         this.attributes = attributes;
+    }
+    
+    public Map<String, Integer> getDecisionParameter() {
+        return decisionParameter;
+    }
+
+    public void setDecisionParameter(Map<String, Integer> decisionParameter) {
+        this.decisionParameter = decisionParameter;
     }
 
     @Override

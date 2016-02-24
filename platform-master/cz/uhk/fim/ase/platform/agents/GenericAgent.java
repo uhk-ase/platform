@@ -1,5 +1,7 @@
 package cz.uhk.fim.ase.platform.agents;
 
+import java.util.Random;
+
 import cz.uhk.fim.ase.platform.core.Platform;
 import cz.uhk.fim.ase.platform.core.Registry;
 import cz.uhk.fim.ase.platform.model.Agent;
@@ -53,6 +55,8 @@ public abstract class GenericAgent implements Runnable {
 			request.setProdukt("food");
 			request.setQuantity(10);
 			request.setPrice(1000);
+			request.setMessageID((int)Math.random());
+			identity.getDealings().add(request.getMessageID());
 			
 			return request;
 		}
@@ -65,6 +69,8 @@ public abstract class GenericAgent implements Runnable {
 			request.setProdukt("painkiller");
 			request.setQuantity(10);
 			request.setPrice(1000);
+			request.setMessageID((int)Math.random());
+			identity.getDealings().add(request.getMessageID());
 			
 			return request;
 		}
@@ -77,6 +83,8 @@ public abstract class GenericAgent implements Runnable {
 			request.setProdukt("tool");
 			request.setQuantity(10);
 			request.setPrice(1000);
+			request.setMessageID((int)Math.random());
+			identity.getDealings().add(request.getMessageID());
 			
 			return request;
 		}
@@ -146,26 +154,114 @@ public abstract class GenericAgent implements Runnable {
     	// rozhodování se èasem rozroste a dáme ho do samostatný tøídy
     	if (messege.getFipa_type() == "offer") {
     		if (messege.getBuy_sell() == "sell") {
-				switch (messege.getProdukt()) {
-				case "food":
-					identity.getInventory().buyFood(messege.getQuantity(), messege.getPrice());
-					messege.setFipa_type("Accept");
-					break;
-				case "tool":
-					identity.getInventory().buyTool(messege.getQuantity(), messege.getPrice());
-					messege.setFipa_type("Accept");
-					break;
-				case "painkiler":
-					identity.getInventory().buyPainkiller(messege.getQuantity(), messege.getPrice());
-					messege.setFipa_type("Accept");
-					break;
+    			//decisio if offer accept or not
+    			Random r = new Random();
+    			//int randomInt = r.nextInt(100) + 1;
+				if (itsGoodOffer(messege) == true) {
+					switch (messege.getProdukt()) {
+					case "food":
+						identity.getInventory().buyFood(messege.getQuantity(),
+								messege.getPrice());
+						messege.setFipa_type("Accept");
+						break;
+					case "tool":
+						identity.getInventory().buyTool(messege.getQuantity(),
+								messege.getPrice());
+						messege.setFipa_type("Accept");
+						break;
+					case "painkiler":
+						identity.getInventory().buyPainkiller(
+								messege.getQuantity(), messege.getPrice());
+						messege.setFipa_type("Accept");
+						break;
 
-				default:
-					messege.setFipa_type("Fail");
-					break;
+					default:
+						messege.setFipa_type("Fail");
+						break;
+					}
 				}
+			}else {
+				messege.setFipa_type("Refuse");
 			}
+		}
+    	if (messege.getFipa_type() == "Accept") {
+			switch (messege.getProdukt()) {
+			case "food":
+				identity.getInventory().sellFood(messege.getQuantity(), messege.getPrice());
+				messege = null;
+				break;
+			case "tool":
+				identity.getInventory().sellTool(messege.getQuantity(), messege.getPrice());
+				messege = null;
+				break;
+			case "painkiler":
+				identity.getInventory().sellPainkiller(messege.getQuantity(), messege.getPrice());
+				messege = null;
+				break;
+
+			default:
+				break;
+			}
+			identity.getDealings().remove(messege.getMessageID());
+		}
+    	if (messege.getFipa_type() == "Refuse") {
+			identity.getDealings().remove(messege.getMessageID());
+			lern(false,"sell");
 		}
 		return messege;
 	}
-}
+
+	private void lern(boolean b, String type) {
+		if (type == "sell") { //agent sell some thing
+			if (b==true) {
+				//trade was successful. Agent can rise his price or keep it same. 
+				//TODO identity.setAttribute()++
+			}
+			if (b==false) {
+				//TODO identity.setAttribute()--
+			}
+		}if (type == "buy") {// agent buy some thing
+			if (b==true) {
+				//trade was successful. Agent can reduce his price or keep it same
+				//TODO identity.setAttribute()--
+			}
+			if (b==false) {
+				//TODO identity.setAttribute()++
+			}
+		}
+		
+	}
+
+	private boolean itsGoodOffer(Message messageToCompare) {
+		
+		switch (messageToCompare.getProdukt()) {
+		case "food":
+			if ((messageToCompare.getPrice()/messageToCompare.getQuantity()) < identity.getDecisionParameter().get("buyParamaterFood"))// full price is divided quantity, from thet we get price from 1 unit 
+			{
+				return true;
+			}else {
+				return false;
+			}
+		case "tool":
+			if ((messageToCompare.getPrice()/messageToCompare.getQuantity()) < identity.getDecisionParameter().get("buyParamaterTool")) 
+			{
+				return true;
+			}else {
+				return false;
+			}
+		case "painkiler":
+			if ((messageToCompare.getPrice()/messageToCompare.getQuantity()) < identity.getDecisionParameter().get("buyParamaterPainkiler")) 
+			{
+				return true;
+			}else {
+				return false;
+			}
+		default:
+			return false;
+			
+		}
+		}
+	}
+		
+	
+

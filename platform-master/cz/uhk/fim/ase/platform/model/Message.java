@@ -16,8 +16,17 @@ public class Message implements Serializable {
     private String produkt;
     private int quantity;
     private int price;
+    private int messageID;
 
-    public String getFipa_type() {
+    public int getMessageID() {
+		return messageID;
+	}
+
+	public void setMessageID(int messageID) {
+		this.messageID = messageID;
+	}
+
+	public String getFipa_type() {
 		return fipa_type;
 	}
 
