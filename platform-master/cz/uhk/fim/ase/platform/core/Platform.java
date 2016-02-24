@@ -1,6 +1,6 @@
 package cz.uhk.fim.ase.platform.core;
 
-import cz.uhk.fim.ase.platform.agents.BuyerAgent;
+
 import cz.uhk.fim.ase.platform.agents.GenericAgent;
 import cz.uhk.fim.ase.platform.agents.R_testAgent;
 import cz.uhk.fim.ase.platform.agents.SellerAgent;
