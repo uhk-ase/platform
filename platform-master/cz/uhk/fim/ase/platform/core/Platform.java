@@ -3,7 +3,6 @@ package cz.uhk.fim.ase.platform.core;
 
 import cz.uhk.fim.ase.platform.agents.GenericAgent;
 import cz.uhk.fim.ase.platform.agents.R_testAgent;
-import cz.uhk.fim.ase.platform.agents.SellerAgent;
 import cz.uhk.fim.ase.platform.communication.broadcast.Publisher;
 import cz.uhk.fim.ase.platform.communication.direct.Listener;
 import cz.uhk.fim.ase.platform.communication.direct.MessageQueue;
