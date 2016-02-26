@@ -1,4 +1,4 @@
-package main.java.cz.uhk.fim.ase.platform.agents;
+package cz.uhk.fim.ase.platform.agents;
 
 import cz.uhk.fim.ase.platform.core.Platform;
 import cz.uhk.fim.ase.platform.core.Registry;

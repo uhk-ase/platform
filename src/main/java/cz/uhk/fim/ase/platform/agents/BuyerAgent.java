@@ -1,4 +1,4 @@
-package main.java.cz.uhk.fim.ase.platform.agents;
+package cz.uhk.fim.ase.platform.agents;
 
 import cz.uhk.fim.ase.platform.core.Platform;
 import cz.uhk.fim.ase.platform.model.Agent;
@@ -18,8 +18,6 @@ public class BuyerAgent extends GenericAgent {
         super(platform, identity);
         identity.getAttributes().put("buyer", "true");
     }
-    //pokus 3adfs
-    //asfd
 
     @Override
     public void run() {
@@ -30,9 +28,6 @@ public class BuyerAgent extends GenericAgent {
         request.setRecipient(seller);
         send(request);
 
-        if (true) {
-			
-		}
         // process response
         Message response = receive();
         if (response != null) {
@@ -42,13 +37,6 @@ public class BuyerAgent extends GenericAgent {
         }
 
         // print stuff
-<<<<<<< HEAD
-        System.out.println("Agent " + getIdentity().getId() + " = " + stuff);
-        if (true) {
-			System.err.println("dsaf");
-		}
-=======
         //System.out.println("Agent " + getIdentity().getId() + " = " + stuff);
->>>>>>> refs/remotes/origin/master
     }
 }

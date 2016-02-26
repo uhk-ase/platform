@@ -1,4 +1,4 @@
-package main.java.cz.uhk.fim.ase.platform.communication.direct;
+package cz.uhk.fim.ase.platform.communication.direct;
 
 import cz.uhk.fim.ase.platform.communication.internal.ZeromqContext;
 import cz.uhk.fim.ase.platform.core.Config;
