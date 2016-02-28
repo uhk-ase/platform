@@ -8,6 +8,7 @@ import java.util.Random;
 import cz.uhk.fim.ase.platform.communication.direct.MessageQueue;
 import cz.uhk.fim.ase.platform.core.Platform;
 import cz.uhk.fim.ase.platform.model.Agent;
+import cz.uhk.fim.ase.platform.model.Inventory;
 import cz.uhk.fim.ase.platform.model.Message;
 
 /**
@@ -40,12 +41,7 @@ public class R_testAgent extends GenericAgent {
         
         identity.setProdukt(assignsProduct());
         //set start parameter
-        identity.getInventory().setHealth(30);
-        identity.getInventory().setFinance(50000);
-        identity.getInventory().setHunger(100);
-        identity.getInventory().setPainkiller(12);
-        identity.getInventory().setTool(4);
-        identity.getInventory().setToolHealth(100);
+        identity.setInventory(new Inventory());
     }
 
     @SuppressWarnings("null")

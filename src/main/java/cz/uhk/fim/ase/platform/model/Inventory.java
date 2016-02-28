@@ -16,7 +16,7 @@ public class Inventory {
 		hunger = 100;
 		health = 100;
 		toolHealth = 100;
-		finance = 10;
+		finance = 100000;
 	}
 
 	public Inventory(int food, int painkiller, int tool, int hunger,
