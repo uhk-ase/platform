@@ -18,6 +18,7 @@ public class R_testAgent extends GenericAgent {
 	private int stuff = 0;
     private ArrayList<Message> offerList;
     private Boolean haveParners = false;
+    private Random random = new Random();
 
 	Message offer_for_me = null;
 	Message offer_respond = null;
@@ -35,6 +36,8 @@ public class R_testAgent extends GenericAgent {
         identity.getDecisionParameter().put("sellParamaterPainkiller",100);//100 per 1 unit
         identity.getDecisionParameter().put("sellParamaterTool",100);//100 per 1 unit
         identity.setPartners(null);
+        
+        identity.setProdukt(assignsProduct());
     }
 
     @SuppressWarnings("null")

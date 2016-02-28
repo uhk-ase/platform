@@ -272,6 +272,17 @@ public abstract class GenericAgent implements Runnable {
 				
 			}
 		}
+		public String assignsProduct() {
+			int i = random.nextInt(2);
+			if (i == 0) {
+				return "food";
+			}else if (i == 1) {
+				return "tool";
+			}else if (i == 2) {
+				return "painkiler";
+			}
+			return "food";
+		}
 	}
 		
 	
