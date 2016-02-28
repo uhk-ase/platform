@@ -16,7 +16,6 @@ import cz.uhk.fim.ase.platform.model.Message;
 public class R_testAgent extends GenericAgent {
 
 	private int stuff = 0;
-    private Random random = new Random();
     private ArrayList<Message> offerList;
     private Boolean haveParners = false;
 
@@ -35,22 +34,18 @@ public class R_testAgent extends GenericAgent {
         identity.getDecisionParameter().put("sellParamaterFood",100);//100 per 1 unit
         identity.getDecisionParameter().put("sellParamaterPainkiller",100);//100 per 1 unit
         identity.getDecisionParameter().put("sellParamaterTool",100);//100 per 1 unit
-        
+        identity.setPartners(null);
     }
 
-    @Override
+    @SuppressWarnings("null")
+	@Override
     public void run() {
     	// get agent his partners
     	 while (haveParners == false) {
-			//TODO
-			ArrayList<Agent> partners = null;
-			List<Agent> agents = getRegistry().getAgents();
-			for (int i = 0; i < 10; i++) {
-				Agent a = agents.get(random.nextInt(agents.size()));
-				partners.add(a);
-			}
+			havePartners();
 			haveParners = true;
 		}
+    	 
 		//Agent standart work. He made his produkt. Repair him self. And try meke some busnis.
     	Work();
 		Repair();

@@ -1,5 +1,6 @@
 package cz.uhk.fim.ase.platform.agents;
 
+import java.util.List;
 import java.util.Random;
 
 import cz.uhk.fim.ase.platform.core.Platform;
@@ -14,6 +15,7 @@ public abstract class GenericAgent implements Runnable {
 
     private Agent identity;
     private Platform platform;
+    private Random random = new Random();
     
     public GenericAgent(Platform platform, Agent identity) {
         this.platform = platform;
@@ -260,6 +262,15 @@ public abstract class GenericAgent implements Runnable {
 			return false;
 			
 		}
+		}
+	
+		public void havePartners() {
+			List<Agent> agents = getRegistry().getAgents();
+			for (int i = 0; i < 10; i++) {
+				Agent a = agents.get(random.nextInt(agents.size()));
+				identity.getPartners().add(a);
+				
+			}
 		}
 	}
 		
