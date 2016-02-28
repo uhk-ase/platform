@@ -35,9 +35,17 @@ public class R_testAgent extends GenericAgent {
         identity.getDecisionParameter().put("sellParamaterFood",100);//100 per 1 unit
         identity.getDecisionParameter().put("sellParamaterPainkiller",100);//100 per 1 unit
         identity.getDecisionParameter().put("sellParamaterTool",100);//100 per 1 unit
+        
         identity.setPartners(null);
         
         identity.setProdukt(assignsProduct());
+        //set start parameter
+        identity.getInventory().setHealth(30);
+        identity.getInventory().setFinance(50000);
+        identity.getInventory().setHunger(100);
+        identity.getInventory().setPainkiller(12);
+        identity.getInventory().setTool(4);
+        identity.getInventory().setToolHealth(100);
     }
 
     @SuppressWarnings("null")
