@@ -101,7 +101,7 @@ public class Platform {
 
         while (!tickManager.isEnd()) {
             logger.debug("Tick #" + tickManager.getCurrent());
-            logger.debug("Agents #" + registry.getAgents());
+            logger.debug("Agents #" + registry.getAgents().size());
             supervisor.addTasks(agents);
             supervisor.block();
             tickManager.increaseTick();
