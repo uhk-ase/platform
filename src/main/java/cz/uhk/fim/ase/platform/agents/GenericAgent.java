@@ -267,9 +267,9 @@ public abstract class GenericAgent implements Runnable {
 	
 		public void assignPartners() {
 			List<Agent> agents = getRegistry().getAgents();
-			ArrayList<Agent> pom = null;
+			ArrayList<Agent> pom = new ArrayList<Agent>();
 			for (int i = 0; i < 10; i++) {
-				Agent a = agents.get(random.nextInt(agents.size()));
+				Agent a = agents.get(random.nextInt(agents.size()-1));
 				pom.add(a);
 			}
 			identity.setPartners(pom);
