@@ -42,6 +42,7 @@ public class R_testAgent extends GenericAgent {
         identity.setProdukt(assignsProduct());
         //set start parameter
         identity.setInventory(new Inventory());
+        identity.setDealings(new ArrayList<Integer>());
     }
 
     @SuppressWarnings("null")
