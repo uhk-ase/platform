@@ -3,15 +3,18 @@ package cz.uhk.fim.ase.platform.core;
 import cz.uhk.fim.ase.platform.agents.BuyerAgent;
 import cz.uhk.fim.ase.platform.agents.GenericAgent;
 import cz.uhk.fim.ase.platform.agents.SellerAgent;
+import cz.uhk.fim.ase.platform.agents.SmartAgent;
 import cz.uhk.fim.ase.platform.communication.broadcast.Publisher;
 import cz.uhk.fim.ase.platform.communication.direct.Listener;
 import cz.uhk.fim.ase.platform.communication.direct.MessageQueue;
 import cz.uhk.fim.ase.platform.communication.direct.Sender;
 import cz.uhk.fim.ase.platform.communication.internal.ZeromqContext;
 import cz.uhk.fim.ase.platform.model.Agent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,17 +84,11 @@ public class Platform {
 
         // create agents
         List<GenericAgent> agents = new ArrayList<>();
-        for (int count = 1; count <= 500; count++) {
+        for (int count = 1; count <= 1000000; count++) {
             Agent agent = new Agent();
             agent.setId(UUID.randomUUID().toString());
             agent.setPlatform(config.getPlatform());
-            agents.add(new BuyerAgent(this, agent));
-            registry.addAgent(agent);
-
-            agent = new Agent();
-            agent.setId(UUID.randomUUID().toString());
-            agent.setPlatform(config.getPlatform());
-            agents.add(new SellerAgent(this, agent));
+            agents.add(new SmartAgent(this, agent));
             registry.addAgent(agent);
         }
 
