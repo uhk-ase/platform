@@ -83,7 +83,7 @@ public class Platform {
 
         // create agents
         List<GenericAgent> agents = new ArrayList<>();
-        for (int count = 1; count <= 1000000; count++) {
+        for (int count = 1; count <= 100; count++) {
             Agent agent = new Agent();
             agent.setId(UUID.randomUUID().toString());
             agent.setPlatform(config.getPlatform());
@@ -100,8 +100,7 @@ public class Platform {
         
 
         while (!tickManager.isEnd()) {
-            logger.debug("Tick #" + tickManager.getCurrent());
-            logger.debug("Agents #" + registry.getAgents().size());
+            logger.debug("Tick #" + tickManager.getCurrent() + "Agents #" + registry.getAgents().size());
             supervisor.addTasks(agents);
             supervisor.block();
             tickManager.increaseTick();
