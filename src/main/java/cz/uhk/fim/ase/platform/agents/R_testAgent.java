@@ -45,7 +45,7 @@ public class R_testAgent extends GenericAgent {
     public void run() {
     	// get agent his partners
     	 while (haveParners == false) {
-			havePartners();
+			assignPartners();
 			haveParners = true;
 		}
     	 

@@ -1,5 +1,6 @@
 package cz.uhk.fim.ase.platform.agents;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -264,13 +265,14 @@ public abstract class GenericAgent implements Runnable {
 		}
 		}
 	
-		public void havePartners() {
+		public void assignPartners() {
 			List<Agent> agents = getRegistry().getAgents();
+			ArrayList<Agent> pom = null;
 			for (int i = 0; i < 10; i++) {
 				Agent a = agents.get(random.nextInt(agents.size()));
-				identity.getPartners().add(a);
-				
+				pom.add(a);
 			}
+			identity.setPartners(pom);
 		}
 		public String assignsProduct() {
 			int i = random.nextInt(2);
