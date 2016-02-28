@@ -18,6 +18,7 @@ public class R_testAgent extends GenericAgent {
 	private int stuff = 0;
     private Random random = new Random();
     private ArrayList<Message> offerList;
+    private Boolean haveParners = false;
 
 	Message offer_for_me = null;
 	Message offer_respond = null;
@@ -35,46 +36,42 @@ public class R_testAgent extends GenericAgent {
         identity.getDecisionParameter().put("sellParamaterPainkiller",100);//100 per 1 unit
         identity.getDecisionParameter().put("sellParamaterTool",100);//100 per 1 unit
         
-        //TODO
-        ArrayList<Agent> partners = null;
-        List<Agent> agents = getRegistry().getAgents();
-        for (int i = 0; i < 10; i++) {
-        	Agent a = agents.get(random.nextInt(agents.size() - 1));
-        	partners.add(a);
-		}
     }
 
     @Override
     public void run() {
-    	//Agent standart work. He made his produkt. Repair him self. And try meke some busnis.
+    	// get agent his partners
+    	 while (haveParners == false) {
+			//TODO
+			ArrayList<Agent> partners = null;
+			List<Agent> agents = getRegistry().getAgents();
+			for (int i = 0; i < 10; i++) {
+				Agent a = agents.get(random.nextInt(agents.size()));
+				partners.add(a);
+			}
+			haveParners = true;
+		}
+		//Agent standart work. He made his produkt. Repair him self. And try meke some busnis.
     	Work();
 		Repair();
-		
+		//create a send message to odher agent
 		for (int i = 0; i < 5; i++) {
 			Message offer_for_someone = Shop();
 			offer_for_someone.setSender(getIdentity());
 			getIdentity().getDealings().add(offer_for_someone.getMessageID());
 			send(offer_for_someone);	
 		}
-		
-		
-//        //Agent respond on offer from other agent.
-//		while (receive() != null) {
-//			Message offer_for_me = receive();
-//			Message offer_respond = decision(offer_for_me);
-//			offer_respond.setSender(getIdentity());
-//			send(offer_respond);			
-//		}
-		//Agent respond on offer from other agent.
-		for (int i = 0; i < 5; i++) {
-			
-			offer_for_me = null;//cleer
-			offer_respond = null;//cleer
-			
-			offer_for_me = receive();
+		// take messege from others
+		while ((offer_for_me = receive()) != null) {
 			offer_respond = decision(offer_for_me);
 			offer_respond.setSender(getIdentity());
 			send(offer_respond);
+			
+
+			offer_for_me = null;//cleer
+			offer_respond = null;//cleer
+			
 		}
+		
     }
 }
