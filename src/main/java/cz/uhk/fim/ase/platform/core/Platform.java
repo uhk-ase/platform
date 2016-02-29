@@ -104,6 +104,7 @@ public class Platform {
             supervisor.addTasks(agents);
             supervisor.block();
             tickManager.increaseTick();
+            
         }
         logger.debug("Shutdown");
     }
