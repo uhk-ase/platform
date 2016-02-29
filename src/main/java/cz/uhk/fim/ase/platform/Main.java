@@ -2,6 +2,7 @@ package cz.uhk.fim.ase.platform;
 
 import cz.uhk.fim.ase.platform.core.Config;
 import cz.uhk.fim.ase.platform.core.Platform;
+import cz.uhk.fim.ase.platform.database.DatabaseSQL;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -75,6 +76,11 @@ public class Main {
 
             Platform platform = new Platform(config);
             platform.start();
+            
+            //inicializace databáze
+            DatabaseSQL dbs = new DatabaseSQL();
+            dbs.CreateDB();
+            
         } catch (ParseException e) {
             logger.error("Command line parser failed", e);
         }
