@@ -11,19 +11,26 @@ import java.util.logging.Logger;
  */
 public class DatabaseSQL {
 
-    
+	final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    final static String DB_URL = "jdbc:mysql://localhost";
+    final static String DB_NAME = "vp_agents";
+
+   //Database login
+   //TODO: UNSAFE!!
+    final static String USER = "root";
+    final static String PASS = "root";
 
     public DatabaseSQL(){
     	//JDBC driver and database url (free hosting)
         //TODO: Add school DB creditals!!
-        static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-        static final String DB_URL = "jdbc:mysql://localhost";
-        static final String DB_NAME = "vp_agents";
+         final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+         final String DB_URL = "jdbc:mysql://localhost";
+         final String DB_NAME = "vp_agents";
 
         //Database login
         //TODO: UNSAFE!!
-        static final String USER = "root";
-        static final String PASS = "root";
+         final String USER = "root";
+         final String PASS = "root";
     }
     
     public void CreateDB() {
@@ -53,7 +60,7 @@ public class DatabaseSQL {
 
             //TODO: Update database tables to real model.
             //st.addBatch("CREATE TABLE agents (id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,money INT(6),agentID VARCHAR(255), product VARCHAR(255), food INT(6), painkillers INT(6), tools INT(6))");
-            st.addBatch("CREATE TABLE agents (id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY, cislo INT(4)")
+            st.addBatch("CREATE TABLE agents (id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY, cislo INT(4)");
             st.executeBatch();
             System.out.println("Database successfully created.");         
 
@@ -122,7 +129,7 @@ public class DatabaseSQL {
             
             System.out.println("Writing into database...");
             st = conn.createStatement();            
-            st.addBatch("INSERT INTO agents (cislo) VALUES (" + cislo + ");
+            st.addBatch("INSERT INTO agents (cislo) VALUES (" + cislo + ")");
             st.executeBatch();
             st.close();
 
@@ -149,10 +156,10 @@ public class DatabaseSQL {
             st = conn.createStatement();
             
             ResultSet rs = st.executeQuery("SELECT * FROM agents ORDER BY id");
-            System.out.println("ID | CISLO + "\n");
+            System.out.println("ID | CISLO \n");
             while (rs.next()) {                
                 Integer id = rs.getInt("id");
-                Integer cislo = rs.getString("cislo");
+                Integer cislo = rs.getInt("cislo");
 
                 System.out.println(id + " | " + cislo + "\n");
             }

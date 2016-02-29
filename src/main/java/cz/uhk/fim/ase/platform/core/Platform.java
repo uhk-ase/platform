@@ -108,7 +108,7 @@ public class Platform {
             tickManager.increaseTick();
             
             //Pøidá øádek do databáze
-            dbs.TestRow(tickManager.getCurrent());
+            dbs.TestRow(tickManager.getCurrent().intValue());
             
             
         }
