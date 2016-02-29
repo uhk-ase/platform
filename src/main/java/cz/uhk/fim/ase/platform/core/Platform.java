@@ -3,6 +3,7 @@ package cz.uhk.fim.ase.platform.core;
 
 import cz.uhk.fim.ase.platform.agents.GenericAgent;
 import cz.uhk.fim.ase.platform.agents.R_testAgent;
+import cz.uhk.fim.ase.platform.database.DatabaseSQL;
 import cz.uhk.fim.ase.platform.communication.broadcast.Publisher;
 import cz.uhk.fim.ase.platform.communication.direct.Listener;
 import cz.uhk.fim.ase.platform.communication.direct.MessageQueue;
@@ -32,6 +33,7 @@ public class Platform {
     private Listener listener;
     private Publisher publisher;
     private TickManager tickManager;
+    private DatabaseSQL dbs;
 
     public Platform(Config config) {
         this.config = config;
@@ -104,7 +106,16 @@ public class Platform {
             supervisor.addTasks(agents);
             supervisor.block();
             tickManager.increaseTick();
+            
+            //Pøidá øádek do databáze
+            dbs.TestRow(tickManager.getCurrent());
+            
+            
         }
+
         logger.debug("Shutdown");
+        
+        //Vypíše databázi
+        dbs.TestGet();
     }
 }
