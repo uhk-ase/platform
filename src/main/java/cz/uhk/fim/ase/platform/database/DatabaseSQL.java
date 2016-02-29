@@ -11,17 +11,21 @@ import java.util.logging.Logger;
  */
 public class DatabaseSQL {
 
-    //JDBC driver and database url (free hosting)
-    //TODO: Add school DB creditals!!
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "db4free.net";
-    static final String DB_NAME = "vp_agents";
+    
 
-    //Database login
-    //TODO: UNSAFE!!
-    static final String USER = "andylek";
-    static final String PASS = "toor123";
+    public DatabaseSQL(){
+    	//JDBC driver and database url (free hosting)
+        //TODO: Add school DB creditals!!
+        static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+        static final String DB_URL = "jdbc:mysql://localhost";
+        static final String DB_NAME = "vp_agents";
 
+        //Database login
+        //TODO: UNSAFE!!
+        static final String USER = "root";
+        static final String PASS = "root";
+    }
+    
     public void CreateDB() {
 
         try {
@@ -47,9 +51,9 @@ public class DatabaseSQL {
             System.out.println("Creating database...");
             st = conn.createStatement();
 
-            st.addBatch("DROP TABLE agents");
             //TODO: Update database tables to real model.
-            st.addBatch("CREATE TABLE agents (id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,money INT(6),agentID VARCHAR(255), product VARCHAR(255), food INT(6), painkillers INT(6), tools INT(6))");
+            //st.addBatch("CREATE TABLE agents (id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,money INT(6),agentID VARCHAR(255), product VARCHAR(255), food INT(6), painkillers INT(6), tools INT(6))");
+            st.addBatch("CREATE TABLE agents (id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY, cislo INT(4)")
             st.executeBatch();
             System.out.println("Database successfully created.");         
 
@@ -101,6 +105,65 @@ public class DatabaseSQL {
         }
     }
 
+    public static void TestRow(int cislo){
+    	try {
+            MysqlDataSource dataSource = new MysqlDataSource();
+            dataSource.setUser(USER);
+            dataSource.setPassword(PASS);
+            dataSource.setServerName(DB_URL);
+            dataSource.setDatabaseName(DB_NAME);
+            Connection conn;
+            Statement st;
+            Class.forName(JDBC_DRIVER);
+            
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            System.out.println("Succesfully connected.");
+            
+            System.out.println("Writing into database...");
+            st = conn.createStatement();            
+            st.addBatch("INSERT INTO agents (cislo) VALUES (" + cislo + ");
+            st.executeBatch();
+            st.close();
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(DatabaseSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void TestGet(){
+    	try {
+            MysqlDataSource dataSource = new MysqlDataSource();
+            dataSource.setUser(USER);
+            dataSource.setPassword(PASS);
+            dataSource.setServerName(DB_URL);
+            dataSource.setDatabaseName(DB_NAME);
+            Connection conn;
+            Statement st;
+            Class.forName(JDBC_DRIVER);
+
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            System.out.println("Succesfully connected.");
+
+            System.out.println("Writing into database...");
+            st = conn.createStatement();
+            
+            ResultSet rs = st.executeQuery("SELECT * FROM agents ORDER BY id");
+            System.out.println("ID | CISLO + "\n");
+            while (rs.next()) {                
+                Integer id = rs.getInt("id");
+                Integer cislo = rs.getString("cislo");
+
+                System.out.println(id + " | " + cislo + "\n");
+            }
+            
+            st.executeBatch();
+            st.close();
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(DatabaseSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * This method prints the whole database.
      */
