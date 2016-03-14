@@ -12,25 +12,23 @@ import java.util.logging.Logger;
 public class DatabaseSQL {
 
 	final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    final static String DB_URL = "jdbc:mysql://localhost";
+    final static String DB_URL = "jdbc:mysql://192.168.46.85:3306";
     final static String DB_NAME = "vp_agents";
 
    //Database login
    //TODO: UNSAFE!!
     final static String USER = "root";
-    final static String PASS = "root";
+    final static String PASS = "Bcxa97am";
 
     public DatabaseSQL(){
-    	//JDBC driver and database url (free hosting)
-        //TODO: Add school DB creditals!!
-         final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-         final String DB_URL = "jdbc:mysql://localhost";
-         final String DB_NAME = "vp_agents";
+    	final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+        final static String DB_URL = "jdbc:mysql://192.168.46.85:3306";
+        final static String DB_NAME = "vp_agents";
 
-        //Database login
-        //TODO: UNSAFE!!
-         final String USER = "root";
-         final String PASS = "root";
+       //Database login
+       //TODO: UNSAFE!!
+        final static String USER = "root";
+        final static String PASS = "Bcxa97am";
     }
     
     public void CreateDB() {
