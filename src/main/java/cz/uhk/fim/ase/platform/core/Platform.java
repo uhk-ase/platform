@@ -8,6 +8,7 @@ import cz.uhk.fim.ase.platform.communication.direct.Listener;
 import cz.uhk.fim.ase.platform.communication.direct.MessageQueue;
 import cz.uhk.fim.ase.platform.communication.direct.Sender;
 import cz.uhk.fim.ase.platform.communication.internal.ZeromqContext;
+import cz.uhk.fim.ase.platform.database.DatabaseNeo4j;
 import cz.uhk.fim.ase.platform.model.Agent;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class Platform {
     private Listener listener;
     private Publisher publisher;
     private TickManager tickManager;
+    private DatabaseNeo4j neo4jDatabase;
 
     public Platform(Config config) {
         this.config = config;
@@ -100,7 +102,10 @@ public class Platform {
         
 
         while (!tickManager.isEnd()) {
-            logger.debug("Tick #" + tickManager.getCurrent() + "Agents #" + registry.getAgents().size());
+        	if (tickManager.getCurrent() % 10 == 0) {// write will be made every 10 tick
+				neo4jDatabase.writeToDB("C:/neo4j" + DatabaseNeo4j.count,registry.getAgents());//write to DB neo4j
+			}
+			logger.debug("Tick #" + tickManager.getCurrent() + "Agents #" + registry.getAgents().size());
             supervisor.addTasks(agents);
             supervisor.block();
             tickManager.increaseTick();
