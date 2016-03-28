@@ -104,6 +104,7 @@ public class Platform {
 
         while (!tickManager.isEnd()) {
         	if (tickManager.getCurrent() % 10 == 0) {// write will be made every 10 tick
+        		logger.debug("nacházíse v registerch agent? " + registry.getAgents().get(0).getId());
 				neo4jDatabase.writeNodeToDB(path + tickManager.getCurrent(),registry.getAgents());//write node to DB neo4j
 				neo4jDatabase.writeRelationshipToDB(path + tickManager.getCurrent(), registry.getAgents()); //write relationship to DB neo4j
 			}
