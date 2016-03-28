@@ -34,6 +34,7 @@ public class Platform {
     private Publisher publisher;
     private TickManager tickManager;
     private DatabaseNeo4j neo4jDatabase;
+    private String path = "home/ase/neo4j/";
 
     public Platform(Config config) {
         this.config = config;
@@ -103,9 +104,10 @@ public class Platform {
 
         while (!tickManager.isEnd()) {
         	if (tickManager.getCurrent() % 10 == 0) {// write will be made every 10 tick
-				neo4jDatabase.writeToDB("C:/neo4j" + DatabaseNeo4j.count,registry.getAgents());//write to DB neo4j
+				neo4jDatabase.writeNodeToDB(path + tickManager.getCurrent(),registry.getAgents());//write node to DB neo4j
+				neo4jDatabase.writeRelationshipToDB(path + tickManager.getCurrent(), registry.getAgents()); //write relationship to DB neo4j
 			}
-			logger.debug("Tick #" + tickManager.getCurrent() + "Agents #" + registry.getAgents().size());
+			logger.debug("Tick # " + tickManager.getCurrent() + "  Agents # " + registry.getAgents().size());
             supervisor.addTasks(agents);
             supervisor.block();
             tickManager.increaseTick();
