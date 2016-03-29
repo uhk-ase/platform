@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,8 +35,11 @@ public class Platform {
     private Listener listener;
     private Publisher publisher;
     private TickManager tickManager;
-    private DatabaseNeo4j neo4jDatabase;
-    private String path = "home/ase/neo4j/";
+    private DatabaseNeo4j neo4jDatabase = new DatabaseNeo4j();
+    private String path = "D:/neo4jRadek/";
+    private int counter =0;
+    GraphDatabaseFactory dbFactory = new GraphDatabaseFactory();
+	GraphDatabaseService db;
 
     public Platform(Config config) {
         this.config = config;
@@ -104,10 +109,13 @@ public class Platform {
 
         while (!tickManager.isEnd()) {
         	if (tickManager.getCurrent() % 10 == 0) {// write will be made every 10 tick
+        		db = dbFactory.newEmbeddedDatabase(path+counter);
+        		
         		logger.debug("nacházíse v registerch agent? " + registry.getAgents().get(0).getId());
-				neo4jDatabase.writeNodeToDB(path + tickManager.getCurrent(),registry.getAgents());//write node to DB neo4j
-				neo4jDatabase.writeRelationshipToDB(path + tickManager.getCurrent(), registry.getAgents()); //write relationship to DB neo4j
-			}
+				neo4jDatabase.writeNodeToDB(path + tickManager.getCurrent(),registry.getAgents(),db);//write node to DB neo4j
+				neo4jDatabase.writeRelationshipToDB(path+ tickManager.getCurrent(), registry.getAgents(),db); //write relationship to DB neo4j
+				counter++;
+        	}
 			logger.debug("Tick # " + tickManager.getCurrent() + "  Agents # " + registry.getAgents().size());
             supervisor.addTasks(agents);
             supervisor.block();

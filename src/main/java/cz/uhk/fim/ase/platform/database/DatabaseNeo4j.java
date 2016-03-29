@@ -11,10 +11,7 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import cz.uhk.fim.ase.platform.model.Agent;
 
 public class DatabaseNeo4j {
-	public void writeNodeToDB(String path, List<Agent> registr) {
-		GraphDatabaseFactory dbFactory = new GraphDatabaseFactory();
-		@SuppressWarnings("deprecation")
-		GraphDatabaseService db = dbFactory.newEmbeddedDatabase(path);
+	public void writeNodeToDB(String path, List<Agent> registr, GraphDatabaseService db) {
 		
 		for (Agent agent : registr) {
 			//create node
@@ -30,11 +27,7 @@ public class DatabaseNeo4j {
 			} 
 		}
 	}
-	public void writeRelationshipToDB(String path, List<Agent> registr) {
-		
-		GraphDatabaseFactory dbFactory = new GraphDatabaseFactory();
-		@SuppressWarnings("deprecation")
-		GraphDatabaseService db = dbFactory.newEmbeddedDatabase(path);
+	public void writeRelationshipToDB(String path, List<Agent> registr, GraphDatabaseService db) {
 		
 		try (Transaction tx = db.beginTx()){
 			for (Agent agent : registr) {
@@ -54,5 +47,8 @@ public class DatabaseNeo4j {
 			}
 			tx.success();
 		}
+	}
+	public void maliZapis() {
+		System.out.println("funguje");
 	}
 }

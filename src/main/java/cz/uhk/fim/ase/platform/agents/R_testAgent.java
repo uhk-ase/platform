@@ -19,7 +19,7 @@ public class R_testAgent extends GenericAgent {
 	private int stuff = 0;
     private ArrayList<Message> offerList;
     private Boolean haveParners = false;
-    private Random random = new Random();
+    private static Random random = new Random();
 
 	Message offer_for_me = null;
 	Message offer_respond = null;
@@ -43,6 +43,7 @@ public class R_testAgent extends GenericAgent {
         //set start parameter
         identity.setInventory(new Inventory());
         identity.setDealings(new ArrayList<Integer>());
+        identity.setFinenc(random.nextInt(1000));
     }
 
     @SuppressWarnings("null")

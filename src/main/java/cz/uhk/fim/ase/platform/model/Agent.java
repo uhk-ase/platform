@@ -19,7 +19,7 @@ public class Agent implements Serializable {
     //TODO add bude potøeba ještì naplnit
     private Inventory inventory;
     private ArrayList<Agent> partners;//
-    private Float finenc;
+    private int finenc;
     private String produkt;
     private ArrayList<Integer> dealings;
     private Map<String,Integer> decisionParameter = new HashMap<>();
@@ -49,11 +49,11 @@ public class Agent implements Serializable {
 		this.partners = partners;
 	}
 
-	public Float getFinenc() {
+	public int getFinenc() {
 		return finenc;
 	}
 
-	public void setFinenc(Float finenc) {
+	public void setFinenc(int finenc) {
 		this.finenc = finenc;
 	}
 
